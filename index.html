@@ -22,27 +22,27 @@
     }
 
     function clickListener(ev) {
-      let scene = document.querySelector('#scebe1');
-      let camDirection = scene.camera.getWorldDirection(direction);
+      let sceneEl = document.querySelector('#scene1');
+      let camDirection = sceneEl.camera.getWorldDirection(direction);
 
       camDirection.multiplyScalar(0.4);
 
       if ((ev.srcElement.id == "up")) {
-        movement.x += camDirection.x;
-        movement.z += camDirection.z;
-      } else if ((ev.srcElement.id == "down")) {
         movement.x -= camDirection.x;
         movement.z -= camDirection.z;
+      } else if ((ev.srcElement.id == "down")) {
+        movement.x += camDirection.x;
+        movement.z += camDirection.z;
       } 
       
       let samplingDirection = camDirection.cross(new THREE.Vector3(0,1,0));
 
       if ((ev.srcElement.id == "left")) {
-        movement.x -= samplingDirection.x;
-        movement.z -= samplingDirection.z;
-      } else if ((ev.srcElement.id == "right")) {
         movement.x += samplingDirection.x;
         movement.z += samplingDirection.z;
+      } else if ((ev.srcElement.id == "right")) {
+        movement.x -= samplingDirection.x;
+        movement.z -= samplingDirection.z;
       }
       
     }
@@ -56,8 +56,8 @@
         let cam = document.querySelector('#cam');
         let position = cam.getAttribute('position');
 
-        position.x += movement.x;
-        position.z += movement.z;
+        position.x -= movement.x;
+        position.z -= movement.z;
 
         cam.setAttribute('position', position);
       },
@@ -68,20 +68,20 @@
         let left = document.querySelector("#left");
         let right = document.querySelector("#right");
 
-        up.addEventListener('touchstart', clickListener)
-        down.addEventListener('touchstart', clickListener)
-        left.addEventListener('touchstart', clickListener)
-        right.addEventListener('touchstart', clickListener)
+        up.addEventListener('touchstart', clickListener);
+        down.addEventListener('touchstart', clickListener);
+        left.addEventListener('touchstart', clickListener);
+        right.addEventListener('touchstart', clickListener);
 
-        up.addEventListener('touchend', touchEndListener)
-        down.addEventListener('touchstart', touchEndListener)
-        left.addEventListener('touchstart', touchEndListener)
-        right.addEventListener('touchstart', touchEndListener)
+        up.addEventListener('touchend', touchEndListener);
+        down.addEventListener('touchend', touchEndListener);
+        left.addEventListener('touchend', touchEndListener);
+        right.addEventListener('touchend', touchEndListener);
       }
     });
   </script>
 
-  <a-scene user-control>
+  <a-scene id="scene1" user-control>
     <!-- Lingkungan -->
     <a-sky color="#ECECEC"></a-sky>
     <a-plane position="0 0 -10" rotation="-90 0 0" width="30" height="30" color="#7BC8A4"></a-plane>
